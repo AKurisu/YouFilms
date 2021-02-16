@@ -2,6 +2,7 @@ package untad.aldochristopher.youfilms.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -9,6 +10,7 @@ import untad.aldochristopher.youfilms.R
 import untad.aldochristopher.youfilms.data.FilmDetailViewModel
 import untad.aldochristopher.youfilms.data.FilmEntity
 import untad.aldochristopher.youfilms.data.FilmViewModel
+import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.ActivityDetailFilmBinding
 import untad.aldochristopher.youfilms.databinding.ContentDetailFilmBinding
 import untad.aldochristopher.youfilms.utils.DataDummy
@@ -33,7 +35,8 @@ class DetailFilmActivity : AppCompatActivity() {
         setSupportActionBar(activityDetailFilmBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FilmDetailViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[FilmDetailViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null){

@@ -12,6 +12,7 @@ import untad.aldochristopher.youfilms.R
 import untad.aldochristopher.youfilms.adapter.FilmAdapter
 import untad.aldochristopher.youfilms.data.FilmEntity
 import untad.aldochristopher.youfilms.data.FilmViewModel
+import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.FragmentTvBinding
 import untad.aldochristopher.youfilms.utils.DataDummy
 
@@ -31,7 +32,9 @@ class TvFragment : Fragment(), FilmCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FilmViewModel::class.java]
+
+            val factory = ViewModelFactory.getInstance(requireContext())
+            val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
             val film = viewModel.getTv()
 
             val adapter = FilmAdapter(this)
