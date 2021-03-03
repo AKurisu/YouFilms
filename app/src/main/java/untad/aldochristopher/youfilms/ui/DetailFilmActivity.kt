@@ -1,19 +1,17 @@
 package untad.aldochristopher.youfilms.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import untad.aldochristopher.youfilms.R
 import untad.aldochristopher.youfilms.data.FilmDetailViewModel
 import untad.aldochristopher.youfilms.data.FilmEntity
-import untad.aldochristopher.youfilms.data.FilmViewModel
 import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.ActivityDetailFilmBinding
 import untad.aldochristopher.youfilms.databinding.ContentDetailFilmBinding
-import untad.aldochristopher.youfilms.utils.DataDummy
 
 class DetailFilmActivity : AppCompatActivity() {
 
@@ -38,14 +36,18 @@ class DetailFilmActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(this, factory)[FilmDetailViewModel::class.java]
 
+        contentDetailFilmBinding.progressBar.visibility = View.VISIBLE
         val extras = intent.extras
         if (extras != null){
             val filmId = extras.getString(EXTRA_FILM)
             val filmType = extras.getInt(EXTRA_TYPE)
             if (filmId != null && filmType != 0){
                 viewModel.setId(filmId, filmType)
-                val film = viewModel.getFilm()
-                populateDetail(film)
+                viewModel.getFilm().observe(this, {
+                        film -> populateDetail(film)
+                        contentDetailFilmBinding.progressBar.visibility = View.GONE
+                })
+
             }
         }
     }

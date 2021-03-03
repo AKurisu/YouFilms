@@ -6,7 +6,7 @@
       "description": "When Jake LaMotta steps into a boxing ring and obliterates his opponent, he's a prizefighter. But when he treats his family and friends the same way, he's a ticking time bomb, ready to go off at any moment. Though LaMotta wants his family's love, something always seems to come between them. Perhaps it's his violent bouts of paranoia and jealousy. This kind of rage helped make him a champ, but in real life, he winds up in the ring alone.",
       "date": "19 December 1980",
       "genre": "Biography, Drama, Sport",
-      "img": "R.drawable.poster_ragingbull"
+      "img": "poster_ragingbull"
     },
     {
       "id": "tt0816692",
@@ -14,7 +14,7 @@
       "description": "Earth's future has been riddled by disasters, famines, and droughts. There is only one way to ensure mankind's survival: Interstellar travel. A newly discovered wormhole in the far reaches of our solar system allows a team of astronauts to go where no man has gone before, a planet that may have the right environment to sustain human life.",
       "date": "7 November 2014",
       "genre": "Adventure, Drama, Sci-Fi",
-      "img": "R.drawable.poster_interstellar"
+      "img": "poster_interstellar"
     },
     {
       "id": "tt6751668",
@@ -22,7 +22,7 @@
       "description": "Jobless, penniless, and, above all, hopeless, the unmotivated patriarch, Ki-taek, and his equally unambitious family--his supportive wife, Chung-sook; his cynical twentysomething daughter, Ki-jung, and his college-age son, Ki-woo--occupy themselves by working for peanuts in their squalid basement-level apartment. Then, by sheer luck, a lucrative business proposition will pave the way for an ingeniously insidious scheme, as Ki-woo summons up the courage to pose as an English tutor for the teenage daughter of the affluent Park family. Now, the stage seems set for an unceasing winner-take-all class war. How does one get rid of a parasite?",
       "date": "8 November 2019",
       "genre": "Comedy, Drama, Thriller",
-      "img": "R.drawable.poster_parasite"
+      "img": "poster_parasite"
     },
     {
       "id": "tt0167404",
@@ -30,7 +30,7 @@
       "description": "To wipe the slate clean and get a chance to redeem himself after that soul-scarring incident one year ago, the Philadelphia child psychologist, Dr Malcolm Crowe, decides to take on his first new case--the profoundly troubled eight-year-old boy, Cole Sear. Exhibiting the same symptoms like one of his former patients, Cole goes one step further by solemnly claiming he has the gift, or curse, of a rare and unwelcome sixth sense; the mysterious ability to see the dreadful and unquiet spectres of the deceased who linger in this earth. However, can a slowly-recovering sceptic believe, let alone, heal, a desperate soul crying for help? And, what if Cole's disturbingly recurring apparitions are not figments of an injured fantasy, but an irrefutable reality?",
       "date": "6 August 1999",
       "genre": "Drama, Mystery, Thriller",
-      "img": "R.drawable.poster_thesixthsense"
+      "img": "poster_thesixthsense"
     },
     {
       "id": "tt0118849",
@@ -38,7 +38,7 @@
       "description": "Ali is asked to repair the torn shoes of his sister, Zohra, while buying groceries. A garbageman takes them, and a guilt-ridden Ali apologetically offers to share his shoes with her. So Zohra ends up wearing his shoes to morning school, then must race back so that he can put them on to attend afternoon school. To placate her, he even gives her a pen that he received from his teacher after coming first in his class. With the birth of a third child, the family struggles to make ends meet. Their father, who is behind on his rent, does gardening chores, and wants Ali to learn this trade. With the economic situation getting worse, it is only a matter of time when even Ali's shoes will wear out - bringing out the question: what will the children wear to school then?",
       "date": "22 January 1999",
       "genre": "Drama, Family, Sport",
-      "img": "R.drawable.poster_childrenofheaven"
+      "img": "poster_childrenofheaven"
     },
     {
       "id": "tt0083658",
@@ -46,7 +46,7 @@
       "description": "In the early twenty-first century, the Tyrell Corporation, during what was called the Nexus phase, developed robots, called replicants, that were supposed to aid society, the replicants which looked and acted like humans. When the superhuman generation Nexus 6 replicants, used for dangerous off-Earth endeavors, began a mutiny on an off-Earth colony, replicants became illegal on Earth. Police units, called blade runners, have the job of destroying - or in their parlance retiring - any replicant that makes its way back to or created on Earth, with anyone convicted of aiding or assisting a replicant being sentenced to death. It's now November, 2019 in Los Angeles, California. Rick Deckard, a former blade runner, is called out of retirement when four known replicants, most combat models, have made their way back to Earth, with their leader being Roy Batty. One, Leon Kowalski, tried to infiltrate his way into the Tyrell Corporation as an employee, but has since been able to escape.",
       "date": "25 June 1982",
       "genre": "Action, Sci-Fi, Thriller",
-      "img": "R.drawable.poster_bladerunner"
+      "img": "poster_bladerunner"
     },
     {
       "id": "tt0892769",
@@ -54,7 +54,7 @@
       "description": "Long ago up North on the Island of Berk, the young Viking, Hiccup, wants to join his town's fight against the dragons that continually raid their town. However, his macho father and village leader, Stoik the Vast, will not allow his small, clumsy, but inventive son to do so. Regardless, Hiccup ventures out into battle and downs a mysterious Night Fury dragon with his invention, but can't bring himself to kill it. Instead, Hiccup and the dragon, whom he dubs Toothless, begin a friendship that would open up both their worlds as the observant boy learns that his people have misjudged the species. But even as the two each take flight in their own way, they find that they must fight the destructive ignorance plaguing their world.",
       "date": "26 March 2010",
       "genre": "Animation, Action, Adventure",
-      "img": "R.drawable.poster_howtodragon"
+      "img": "poster_howtodragon"
     },
     {
       "id": "tt0031381",
@@ -62,7 +62,7 @@
       "description": "In the face of the imminent U.S. Civil War, the pampered socialite and petulant Southern Belle, Scarlett O'Hara, basks in the limelight, enjoying a lavish lifestyle. Knowing that the rich and red-hued soil of Tara--the ancestral cotton plantation in Georgia--is the only thing worth fighting for, the resilient woman will do everything in her power to control her destiny; including marrying the wrong men to maintain her enviable social status. However, death seems to follow Scarlett--and as she swears never to be poor again, standing on the sparkling ashes of her beloved but burned-to-the-ground home--the cynical playboy, Rhett Butler, offers a way out, and a new lease of life. Headstrong, passionate, and, above all, resolute, not even war--or death--can stand in Scarlett's way; nevertheless, love is delicate and elusive, and, somehow, it is always one step ahead of her. Has Scarlett's noble aspiration for a better future gone with the wind?",
       "date": "17 January 1940",
       "genre": "Drama, History, Romance",
-      "img": "R.drawable.poster_gonewind"
+      "img": "poster_gonewind"
     },
     {
       "id": "tt0055031",
@@ -70,15 +70,15 @@
       "description": "It has been three years since the most important Nazi leaders had already been tried. This trial is about 4 judges who used their offices to conduct Nazi sterilization and cleansing policies. Retired American judge, Dan Haywood has a daunting task ahead of him. The Cold War is heating up and no one wants any more trials as Germany, and Allied governments, want to forget the past. But is that the right thing to do is the question that the tribunal must decide.",
       "date": "18 December 1961",
       "genre": "Drama, War",
-      "img": "R.drawable.poster_judgementat"
+      "img": "poster_judgementat"
     },
     {
-      "id": "",
-      "title": "",
-      "description": "",
-      "date": "",
-      "genre": "",
-      "img": ""
+      "id": "tt0266543",
+      "title": "Finding Nemo",
+      "description": "A clown fish named Marlin lives in the Great Barrier Reef and loses his son, Nemo, after he ventures into the open sea, despite his father's constant warnings about many of the ocean's dangers. Nemo is abducted by a boat and netted up and sent to a dentist's office in Sydney. While Marlin ventures off to try to retrieve Nemo, Marlin meets a fish named Dory, a blue tang suffering from short-term memory loss. The companions travel a great distance, encountering various dangerous sea creatures such as sharks, anglerfish and jellyfish, in order to rescue Nemo from the dentist's office, which is situated by Sydney Harbour. While the two are searching the ocean far and wide, Nemo and the other sea animals in the dentist's fish tank plot a way to return to the sea to live their lives free again.",
+      "date": "30 May 2003",
+      "genre": "Animation, Adventure, Comedy",
+      "img": "poster_findingnemo"
     }
   ]
 }

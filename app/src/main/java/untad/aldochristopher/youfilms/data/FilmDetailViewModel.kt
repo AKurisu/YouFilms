@@ -1,9 +1,10 @@
 package untad.aldochristopher.youfilms.data
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import untad.aldochristopher.youfilms.utils.DataDummy
+import untad.aldochristopher.youfilms.data.source.FilmRepository
 
-class FilmDetailViewModel: ViewModel() {
+class FilmDetailViewModel(private val filmRepository: FilmRepository): ViewModel() {
 
     private lateinit var filmId : String
     private var filmType = 0
@@ -13,20 +14,5 @@ class FilmDetailViewModel: ViewModel() {
         this.filmType = filmType
     }
 
-    fun getFilm(): FilmEntity{
-        var film = DataDummy.generateDummy()
-        val dataDummy : List<FilmEntity>
-        if (filmType == 1){
-            dataDummy = DataDummy.generateDataMovie()
-        } else {
-            dataDummy = DataDummy.generateDataTvShow()
-        }
-
-        for (filmSearch in dataDummy) {
-            if (filmSearch.id == filmId) {
-                film = filmSearch
-            }
-        }
-        return film
-    }
+    fun getFilm(): LiveData<FilmEntity> = filmRepository.getFilmDetail(filmId, filmType)
 }

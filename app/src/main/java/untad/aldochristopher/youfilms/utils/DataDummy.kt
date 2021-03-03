@@ -2,12 +2,28 @@ package untad.aldochristopher.youfilms.utils
 
 import untad.aldochristopher.youfilms.R
 import untad.aldochristopher.youfilms.data.FilmEntity
+import untad.aldochristopher.youfilms.data.source.remote.response.FilmResponse
 
 object DataDummy {
 
-    fun generateDummy(): FilmEntity{
+    fun generateDummy(): List<FilmEntity>{
 
-        val film = FilmEntity("A123","Dummy","Lorem Ipsum","1 January 1970","-",1)
+        val film = ArrayList<FilmEntity>()
+
+        film.add(FilmEntity("A123","Dummy","Lorem Ipsum","1 January 1970","-",1))
+        film.add(FilmEntity("B456","Dummy","Lorem Ipsum","1 January 1900","-",1))
+        film.add(FilmEntity("C789","Dummy","Lorem Ipsum","1 January 1900","-",1))
+
+        return film
+    }
+
+    fun generateDummyRemote(): List<FilmResponse>{
+
+        val film = ArrayList<FilmResponse>()
+
+        film.add(FilmResponse("A123","Dummy","Lorem Ipsum","1 January 1970","-",1))
+        film.add(FilmResponse("B456","Dummy","Lorem Ipsum","1 January 1900","-",1))
+        film.add(FilmResponse("C789","Dummy","Lorem Ipsum","1 January 1900","-",1))
 
         return film
     }

@@ -3,14 +3,17 @@ package untad.aldochristopher.youfilms.ui
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import untad.aldochristopher.youfilms.R
 import untad.aldochristopher.youfilms.utils.DataDummy
+import untad.aldochristopher.youfilms.utils.EspressoIdlingResources
 
 class MainActivityTest{
 
@@ -21,6 +24,12 @@ class MainActivityTest{
     @Before
     fun setUp(){
         ActivityScenario.launch(MainActivity::class.java)
+        IdlingRegistry.getInstance().register(EspressoIdlingResources.espressoTestIdlingResource)
+    }
+
+    @After
+    fun tearUp(){
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResources.espressoTestIdlingResource)
     }
 
     @Test

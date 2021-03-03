@@ -14,11 +14,10 @@ import untad.aldochristopher.youfilms.data.FilmEntity
 import untad.aldochristopher.youfilms.data.FilmViewModel
 import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.FragmentMovieBinding
-import untad.aldochristopher.youfilms.utils.DataDummy
 
 class MovieFragment : Fragment(), FilmCallback {
 
-    lateinit var fragment: FragmentMovieBinding
+    private lateinit var fragment: FragmentMovieBinding
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,10 +34,15 @@ class MovieFragment : Fragment(), FilmCallback {
 
             val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
-            val film = viewModel.getMovie()
 
             val adapter = FilmAdapter(this)
-            adapter.setFilm(film, 1)
+
+            viewModel.getMovie().observe(viewLifecycleOwner, { film ->
+                adapter.setFilm(film, 1)
+                adapter.notifyDataSetChanged()
+                fragment.progressBar.visibility = View.GONE
+            })
+
             with(fragment.rvMovie) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)

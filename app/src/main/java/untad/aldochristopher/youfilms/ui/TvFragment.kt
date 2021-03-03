@@ -1,11 +1,11 @@
 package untad.aldochristopher.youfilms.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import untad.aldochristopher.youfilms.R
@@ -14,11 +14,10 @@ import untad.aldochristopher.youfilms.data.FilmEntity
 import untad.aldochristopher.youfilms.data.FilmViewModel
 import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.FragmentTvBinding
-import untad.aldochristopher.youfilms.utils.DataDummy
 
 class TvFragment : Fragment(), FilmCallback {
 
-    lateinit var fragment: FragmentTvBinding
+    private lateinit var fragment: FragmentTvBinding
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,
                                savedInstanceState: Bundle?
@@ -35,10 +34,14 @@ class TvFragment : Fragment(), FilmCallback {
 
             val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
-            val film = viewModel.getTv()
-
             val adapter = FilmAdapter(this)
-            adapter.setFilm(film, 2)
+
+            viewModel.getTv().observe(viewLifecycleOwner, { film ->
+                fragment.progressBar.visibility = View.GONE
+                adapter.setFilm(film, 2)
+                adapter.notifyDataSetChanged()
+            })
+
             with(fragment.rvTv) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
