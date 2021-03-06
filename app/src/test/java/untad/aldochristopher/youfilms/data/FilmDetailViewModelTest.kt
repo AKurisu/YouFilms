@@ -14,14 +14,17 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import untad.aldochristopher.youfilms.data.source.FilmRepository
+import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.MovieEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.TvEntity
 import untad.aldochristopher.youfilms.utils.DataDummy
 
 @RunWith(MockitoJUnitRunner::class)
 class FilmDetailViewModelTest {
 
     private lateinit var viewModel: FilmDetailViewModel
-    private val dummy = DataDummy.generateDummy()[0]
-    private val dummyTwo = DataDummy.generateDummy()[1]
+    private val dummy = DataDummy.generateDummyMovie()[0]
+    private val dummyTwo = DataDummy.generateDummyTv()[1]
     private val dummyId = dummy.id
     private val dummyIdTwo = dummyTwo.id
 
@@ -29,7 +32,10 @@ class FilmDetailViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<FilmEntity>
+    private lateinit var observerMovie: Observer<MovieEntity>
+
+    @Mock
+    private lateinit var observerTv: Observer<TvEntity>
 
     @Mock
     private lateinit var filmRepository: FilmRepository
@@ -42,12 +48,12 @@ class FilmDetailViewModelTest {
 
     @Test
     fun getMovieDetail(){
-        val filmDummy = MutableLiveData<FilmEntity>()
+        val filmDummy = MutableLiveData<MovieEntity>()
         filmDummy.value = dummy
 
-        `when`(filmRepository.getFilmDetail(dummyId, 1)).thenReturn(filmDummy)
-        val film = viewModel.getFilm().value
-        verify(filmRepository).getFilmDetail(dummyId, 1)
+        `when`(filmRepository.getMovieDetail(dummyId)).thenReturn(filmDummy)
+        val film = viewModel.getMovieDetail.value
+        verify(filmRepository).getMovieDetail(dummyId)
         assertNotNull(film)
         assertEquals("A123", film?.id)
         assertEquals("Dummy", film?.title)
@@ -55,20 +61,21 @@ class FilmDetailViewModelTest {
         assertEquals("-", film?.genre)
         assertEquals("Lorem Ipsum", film?.description)
         assertEquals(1, film?.img)
+        assertEquals(false, film?.favorited)
 
-        viewModel.getFilm().observeForever(observer)
-        verify(observer).onChanged(dummy)
+        viewModel.getMovieDetail.observeForever(observerMovie)
+        verify(observerMovie).onChanged(dummy)
     }
 
     @Test
     fun getTvDetail(){
-        val filmDummy = MutableLiveData<FilmEntity>()
+        val filmDummy = MutableLiveData<TvEntity>()
         filmDummy.value = dummyTwo
         viewModel.setId(dummyIdTwo, 2)
 
-        `when`(filmRepository.getFilmDetail(dummyIdTwo, 2)).thenReturn(filmDummy)
-        val film = viewModel.getFilm().value
-        verify(filmRepository).getFilmDetail(dummyIdTwo, 2)
+        `when`(filmRepository.getTvDetail(dummyIdTwo)).thenReturn(filmDummy)
+        val film = viewModel.getTvDetail.value
+        verify(filmRepository).getTvDetail(dummyIdTwo)
         assertNotNull(film)
         assertEquals("B456", film?.id)
         assertEquals("Dummy", film?.title)
@@ -77,7 +84,7 @@ class FilmDetailViewModelTest {
         assertEquals("Lorem Ipsum", film?.description)
         assertEquals(1, film?.img)
 
-        viewModel.getFilm().observeForever(observer)
-        verify(observer).onChanged(dummyTwo)
+        viewModel.getTvDetail.observeForever(observerTv)
+        verify(observerTv).onChanged(dummyTwo)
     }
 }

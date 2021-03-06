@@ -1,4 +1,4 @@
-package untad.aldochristopher.youfilms.data
+package untad.aldochristopher.youfilms.data.source.local.entity
 
 data class FilmEntity(
     var id: String,

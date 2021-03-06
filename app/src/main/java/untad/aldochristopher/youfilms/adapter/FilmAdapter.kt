@@ -1,13 +1,14 @@
 package untad.aldochristopher.youfilms.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import untad.aldochristopher.youfilms.R
-import untad.aldochristopher.youfilms.data.FilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
 import untad.aldochristopher.youfilms.databinding.ItemFilmBinding
 import untad.aldochristopher.youfilms.ui.DetailFilmActivity
 import untad.aldochristopher.youfilms.ui.FilmCallback
@@ -38,6 +39,7 @@ class FilmAdapter(private val callback : FilmCallback) : RecyclerView.Adapter<Fi
     inner class FilmViewHolder (private val binding: ItemFilmBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(film: FilmEntity){
             with(binding){
+                Log.d("Adapter",film.title)
                 txtItemTitle.text = film.title
                 txtItemDate.text = film.date
                 txtItemGenre.text = film.genre

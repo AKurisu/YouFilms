@@ -9,7 +9,7 @@ import untad.aldochristopher.youfilms.R
 import untad.aldochristopher.youfilms.ui.MovieFragment
 import untad.aldochristopher.youfilms.ui.TvFragment
 
-class SectionPagerAdapter(private val con: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
+class SectionPagerAdapter(private val con: Context, fm: FragmentManager, private val activity: String) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
 
     companion object{
         @StringRes
@@ -20,8 +20,8 @@ class SectionPagerAdapter(private val con: Context, fm: FragmentManager) : Fragm
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> MovieFragment()
-            1 -> TvFragment()
+            0 -> MovieFragment(activity)
+            1 -> TvFragment(activity)
             else -> Fragment()
         }
 

@@ -1,6 +1,7 @@
 package untad.aldochristopher.youfilms.data.source.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import untad.aldochristopher.youfilms.data.FilmDetailViewModel

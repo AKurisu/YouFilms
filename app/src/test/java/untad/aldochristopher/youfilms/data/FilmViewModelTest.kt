@@ -14,7 +14,11 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import untad.aldochristopher.youfilms.data.source.FilmRepository
+import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.MovieEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.TvEntity
 import untad.aldochristopher.youfilms.utils.DataDummy
+import untad.aldochristopher.youfilms.vo.Resource
 
 @RunWith(MockitoJUnitRunner::class)
 class FilmViewModelTest{
@@ -28,7 +32,10 @@ class FilmViewModelTest{
     private lateinit var filmRepository: FilmRepository
 
     @Mock
-    private lateinit var observer: Observer<List<FilmEntity>>
+    private lateinit var observerMovie: Observer<Resource<List<MovieEntity>>>
+
+    @Mock
+    private lateinit var observerTv: Observer<Resource<List<TvEntity>>>
 
     @Before
     fun setUp(){
@@ -36,25 +43,32 @@ class FilmViewModelTest{
     }
 
     @Test
-    fun getFilm(){
-        val dummyFilm = DataDummy.generateDummy()
-        val film = MutableLiveData<List<FilmEntity>>()
-        film.value = dummyFilm
+    fun getMovie(){
+        val dummyMovie = Resource.success(DataDummy.generateDummyMovie())
+        val movie = MutableLiveData<Resource<List<MovieEntity>>>()
+        movie.value = dummyMovie
 
-        `when`(filmRepository.getMovie()).thenReturn(film)
-        val moviesEntity = viewModel.getMovie().value
+        `when`(filmRepository.getMovie()).thenReturn(movie)
+        val moviesEntity = viewModel.getMovie().value?.data
         verify(filmRepository).getMovie()
         assertNotNull(moviesEntity)
         assertEquals(3, moviesEntity?.size)
-        viewModel.getMovie().observeForever(observer)
-        verify(observer).onChanged(dummyFilm)
+        viewModel.getMovie().observeForever(observerMovie)
+        verify(observerMovie).onChanged(dummyMovie)
+    }
 
-        `when`(filmRepository.getTvshow()).thenReturn(film)
-        val tvEntities = viewModel.getTv().value
+    @Test
+    fun getTv() {
+        val dummyTv = Resource.success(DataDummy.generateDummyTv())
+        val tv = MutableLiveData<Resource<List<TvEntity>>>()
+        tv.value = dummyTv
+
+        `when`(filmRepository.getTvshow()).thenReturn(tv)
+        val tvEntities = viewModel.getTv().value?.data
         verify(filmRepository).getTvshow()
         assertNotNull(tvEntities)
         assertEquals(3, tvEntities?.size)
-        viewModel.getTv().observeForever(observer)
-        verify(observer).onChanged(dummyFilm)
+        viewModel.getTv().observeForever(observerTv)
+        verify(observerTv).onChanged(dummyTv)
     }
 }

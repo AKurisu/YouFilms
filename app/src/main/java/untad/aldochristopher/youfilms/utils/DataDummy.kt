@@ -1,18 +1,39 @@
 package untad.aldochristopher.youfilms.utils
 
 import untad.aldochristopher.youfilms.R
-import untad.aldochristopher.youfilms.data.FilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.MovieEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.TvEntity
 import untad.aldochristopher.youfilms.data.source.remote.response.FilmResponse
 
 object DataDummy {
 
-    fun generateDummy(): List<FilmEntity>{
+    fun generateDummyDetailMovie(): MovieEntity = MovieEntity(
+        "A123","Dummy","Lorem Ipsum","1 January 1970","-",1,false
+    )
 
-        val film = ArrayList<FilmEntity>()
+    fun generateDummyDetailTv(): TvEntity = TvEntity(
+        "A123","Dummy","Lorem Ipsum","1 January 1970","-",1,false
+    )
 
-        film.add(FilmEntity("A123","Dummy","Lorem Ipsum","1 January 1970","-",1))
-        film.add(FilmEntity("B456","Dummy","Lorem Ipsum","1 January 1900","-",1))
-        film.add(FilmEntity("C789","Dummy","Lorem Ipsum","1 January 1900","-",1))
+    fun generateDummyMovie(): List<MovieEntity>{
+
+        val film = ArrayList<MovieEntity>()
+
+        film.add(MovieEntity("A123","Dummy","Lorem Ipsum","1 January 1970","-",1,false))
+        film.add(MovieEntity("B456","Dummy","Lorem Ipsum","1 January 1900","-",1,false))
+        film.add(MovieEntity("C789","Dummy","Lorem Ipsum","1 January 1900","-",1,false))
+
+        return film
+    }
+
+    fun generateDummyTv(): List<TvEntity>{
+
+        val film = ArrayList<TvEntity>()
+
+        film.add(TvEntity("A123","Dummy","Lorem Ipsum","1 January 1970","-",1,false))
+        film.add(TvEntity("B456","Dummy","Lorem Ipsum","1 January 1900","-",1,false))
+        film.add(TvEntity("C789","Dummy","Lorem Ipsum","1 January 1900","-",1,false))
 
         return film
     }
@@ -21,9 +42,9 @@ object DataDummy {
 
         val film = ArrayList<FilmResponse>()
 
-        film.add(FilmResponse("A123","Dummy","Lorem Ipsum","1 January 1970","-",1))
-        film.add(FilmResponse("B456","Dummy","Lorem Ipsum","1 January 1900","-",1))
-        film.add(FilmResponse("C789","Dummy","Lorem Ipsum","1 January 1900","-",1))
+        film.add(FilmResponse("A123","Dummy","Lorem Ipsum","1 January 1970","-",1,false))
+        film.add(FilmResponse("B456","Dummy","Lorem Ipsum","1 January 1900","-",1,false))
+        film.add(FilmResponse("C789","Dummy","Lorem Ipsum","1 January 1900","-",1,false))
 
         return film
     }

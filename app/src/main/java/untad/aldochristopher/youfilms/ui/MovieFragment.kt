@@ -1,21 +1,26 @@
 package untad.aldochristopher.youfilms.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import untad.aldochristopher.youfilms.R
 import untad.aldochristopher.youfilms.adapter.FilmAdapter
-import untad.aldochristopher.youfilms.data.FilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
 import untad.aldochristopher.youfilms.data.FilmViewModel
+import untad.aldochristopher.youfilms.data.ToFilmEntity
 import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.FragmentMovieBinding
+import untad.aldochristopher.youfilms.vo.Status
 
-class MovieFragment : Fragment(), FilmCallback {
+class MovieFragment(private val activity: String) : Fragment(), FilmCallback {
 
     private lateinit var fragment: FragmentMovieBinding
 
@@ -37,17 +42,78 @@ class MovieFragment : Fragment(), FilmCallback {
 
             val adapter = FilmAdapter(this)
 
-            viewModel.getMovie().observe(viewLifecycleOwner, { film ->
-                adapter.setFilm(film, 1)
-                adapter.notifyDataSetChanged()
-                fragment.progressBar.visibility = View.GONE
-            })
-
-            with(fragment.rvMovie) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                this.adapter = adapter
+            if (activity == "Main"){
+                getMain(adapter, viewModel)
+            } else if (activity == "Fav"){
+                getFavorite(adapter, viewModel)
             }
+
+//            viewModel.getMovie().observe(viewLifecycleOwner, { film ->
+//                if (film != null){
+//                    Log.d("Fragment", film.status.name)
+//                    when(film.status){
+//                        Status.LOADING -> fragment.progressBar.visibility = View.VISIBLE
+//                        Status.SUCCESS -> {
+//                            fragment.progressBar.visibility = View.GONE
+//                            val movie = ToFilmEntity.takeMovie(film.data)
+//                            adapter.setFilm(movie, 1)
+//                            adapter.notifyDataSetChanged()
+//                        }
+//                        Status.ERROR ->{
+//                            fragment.progressBar.visibility = View.GONE
+//                            Toast.makeText(context, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                }
+//            })
+//
+//            with(fragment.rvMovie) {
+//                layoutManager = LinearLayoutManager(context)
+//                setHasFixedSize(true)
+//                this.adapter = adapter
+//            }
+        }
+    }
+
+    private fun getFavorite(adapter: FilmAdapter, viewModel: FilmViewModel) {
+        viewModel.getFavoriteMovie().observe(viewLifecycleOwner, { film ->
+            if (film != null) {
+                fragment.progressBar.visibility = View.GONE
+                val movie = ToFilmEntity.takeMovie(film)
+                adapter.setFilm(movie, 1)
+                adapter.notifyDataSetChanged()
+                setRv(adapter)
+            }
+        })
+    }
+
+    private fun getMain(adapter: FilmAdapter, viewModel: FilmViewModel) {
+        viewModel.getMovie().observe(viewLifecycleOwner, { film ->
+            if (film != null) {
+                Log.d("Fragment", film.status.name)
+                when (film.status) {
+                    Status.LOADING -> fragment.progressBar.visibility = View.VISIBLE
+                    Status.SUCCESS -> {
+                        fragment.progressBar.visibility = View.GONE
+                        val movie = ToFilmEntity.takeMovie(film.data)
+                        adapter.setFilm(movie, 1)
+                        adapter.notifyDataSetChanged()
+                        setRv(adapter)
+                    }
+                    Status.ERROR -> {
+                        fragment.progressBar.visibility = View.GONE
+                        Toast.makeText(context, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setRv(adapter: FilmAdapter){
+        with(fragment.rvMovie) {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            this.adapter = adapter
         }
     }
 
