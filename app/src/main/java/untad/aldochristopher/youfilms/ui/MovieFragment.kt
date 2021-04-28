@@ -1,6 +1,5 @@
 package untad.aldochristopher.youfilms.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,12 +9,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import untad.aldochristopher.youfilms.R
-import untad.aldochristopher.youfilms.adapter.FilmAdapter
+import untad.aldochristopher.youfilms.adapter.MovieAdapter
 import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
 import untad.aldochristopher.youfilms.data.FilmViewModel
 import untad.aldochristopher.youfilms.data.ToFilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.MovieEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.TvEntity
 import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.FragmentMovieBinding
 import untad.aldochristopher.youfilms.vo.Status
@@ -23,6 +27,8 @@ import untad.aldochristopher.youfilms.vo.Status
 class MovieFragment(private val activity: String) : Fragment(), FilmCallback {
 
     private lateinit var fragment: FragmentMovieBinding
+    private lateinit var mAdapter: MovieAdapter
+    private lateinit var viewModel: FilmViewModel
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,56 +44,35 @@ class MovieFragment(private val activity: String) : Fragment(), FilmCallback {
         if (activity != null) {
 
             val factory = ViewModelFactory.getInstance(requireContext())
-            val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
+            viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
 
-            val adapter = FilmAdapter(this)
+            mAdapter = MovieAdapter(this)
 
             if (activity == "Main"){
-                getMain(adapter, viewModel)
+                getMain(mAdapter, viewModel)
             } else if (activity == "Fav"){
-                getFavorite(adapter, viewModel)
+                itemTouchHelper.attachToRecyclerView(fragment.rvMovie)
+                getFavorite(mAdapter, viewModel)
             }
 
-//            viewModel.getMovie().observe(viewLifecycleOwner, { film ->
-//                if (film != null){
-//                    Log.d("Fragment", film.status.name)
-//                    when(film.status){
-//                        Status.LOADING -> fragment.progressBar.visibility = View.VISIBLE
-//                        Status.SUCCESS -> {
-//                            fragment.progressBar.visibility = View.GONE
-//                            val movie = ToFilmEntity.takeMovie(film.data)
-//                            adapter.setFilm(movie, 1)
-//                            adapter.notifyDataSetChanged()
-//                        }
-//                        Status.ERROR ->{
-//                            fragment.progressBar.visibility = View.GONE
-//                            Toast.makeText(context, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                }
-//            })
-//
-//            with(fragment.rvMovie) {
-//                layoutManager = LinearLayoutManager(context)
-//                setHasFixedSize(true)
-//                this.adapter = adapter
-//            }
+            with(fragment.rvMovie) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                this.adapter = mAdapter
+            }
         }
     }
 
-    private fun getFavorite(adapter: FilmAdapter, viewModel: FilmViewModel) {
+    private fun getFavorite(adapter: MovieAdapter, viewModel: FilmViewModel) {
         viewModel.getFavoriteMovie().observe(viewLifecycleOwner, { film ->
             if (film != null) {
                 fragment.progressBar.visibility = View.GONE
-                val movie = ToFilmEntity.takeMovie(film)
-                adapter.setFilm(movie, 1)
-                adapter.notifyDataSetChanged()
-                setRv(adapter)
+                adapter.submitList(film)
             }
         })
     }
 
-    private fun getMain(adapter: FilmAdapter, viewModel: FilmViewModel) {
+    private fun getMain(adapter: MovieAdapter, viewModel: FilmViewModel) {
         viewModel.getMovie().observe(viewLifecycleOwner, { film ->
             if (film != null) {
                 Log.d("Fragment", film.status.name)
@@ -95,10 +80,8 @@ class MovieFragment(private val activity: String) : Fragment(), FilmCallback {
                     Status.LOADING -> fragment.progressBar.visibility = View.VISIBLE
                     Status.SUCCESS -> {
                         fragment.progressBar.visibility = View.GONE
-                        val movie = ToFilmEntity.takeMovie(film.data)
-                        adapter.setFilm(movie, 1)
-                        adapter.notifyDataSetChanged()
-                        setRv(adapter)
+                        Log.d("Frag", film.data?.size.toString())
+                        adapter.submitList(film.data)
                     }
                     Status.ERROR -> {
                         fragment.progressBar.visibility = View.GONE
@@ -109,15 +92,15 @@ class MovieFragment(private val activity: String) : Fragment(), FilmCallback {
         })
     }
 
-    private fun setRv(adapter: FilmAdapter){
-        with(fragment.rvMovie) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            this.adapter = adapter
-        }
-    }
+//    private fun setRv(adapter: MovieAdapter){
+//        with(fragment.rvMovie) {
+//            layoutManager = LinearLayoutManager(context)
+//            setHasFixedSize(true)
+//            this.adapter = adapter
+//        }
+//    }
 
-    override fun onShareClick(film: FilmEntity) {
+    override fun onShareClick(film: MovieEntity) {
         if (activity != null) {
             val filmLink = "http:\\\\imdb.com\\" + film.id
 
@@ -128,4 +111,22 @@ class MovieFragment(private val activity: String) : Fragment(), FilmCallback {
                     .startChooser()
         }
     }
+
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
+        override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int =
+                makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = true
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            if (view != null) {
+                val swipedPosition = viewHolder.adapterPosition
+                val favSwiped = mAdapter.getSwipedData(swipedPosition)
+                favSwiped?.let { viewModel.setFavorite(it, null, 1) }
+                val snackbar = Snackbar.make(view as View, "Undo", Snackbar.LENGTH_LONG)
+                snackbar.setAction("OK") { v ->
+                    favSwiped?.let { viewModel.setFavorite(it, null, 1) }
+                }
+                snackbar.show()
+            }
+        }
+    })
 }

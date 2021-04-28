@@ -1,12 +1,10 @@
 package untad.aldochristopher.youfilms.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import untad.aldochristopher.youfilms.data.source.FilmRepository
-import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
 import untad.aldochristopher.youfilms.data.source.local.entity.MovieEntity
 import untad.aldochristopher.youfilms.data.source.local.entity.TvEntity
 

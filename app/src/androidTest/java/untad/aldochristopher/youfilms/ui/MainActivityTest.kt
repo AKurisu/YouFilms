@@ -1,5 +1,6 @@
 package untad.aldochristopher.youfilms.ui
 
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -71,5 +72,13 @@ class MainActivityTest{
         onView(withId(R.id.txt_genre)).check(matches(withText(dummyTv[0].genre)))
         onView(withId(R.id.txt_desc)).check(matches(isDisplayed()))
         onView(withId(R.id.txt_desc)).check(matches(withText(dummyTv[0].description)))
+    }
+
+    @Test
+    fun checkFavorite(){
+        onView(withId(R.id.fav_menu)).perform(click())
+        onView(withId(R.id.rvMovie)).check(matches(isDisplayed()))
+        onView(withText("TV Show")).perform(click())
+        onView(withId(R.id.rvTv)).check(matches(isDisplayed()))
     }
 }

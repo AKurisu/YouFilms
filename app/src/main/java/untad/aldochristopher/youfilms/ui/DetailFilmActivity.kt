@@ -1,8 +1,10 @@
 package untad.aldochristopher.youfilms.ui
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -41,6 +43,7 @@ class DetailFilmActivity : AppCompatActivity() {
         var status = false
         val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(this, factory)[FilmDetailViewModel::class.java]
+        Log.d("Detail", "Halo")
 
         contentDetailFilmBinding.progressBar.visibility = View.VISIBLE
         activityDetailFilmBinding.fab.visibility = View.GONE
@@ -48,6 +51,7 @@ class DetailFilmActivity : AppCompatActivity() {
         if (extras != null){
             val filmId = extras.getString(EXTRA_FILM)
             val filmType = extras.getInt(EXTRA_TYPE)
+            Log.d("Detail", filmId)
             if (filmId != null && filmType != 0){
                 viewModel.setId(filmId, filmType)
                 if (filmType == 1){
@@ -62,6 +66,8 @@ class DetailFilmActivity : AppCompatActivity() {
                         tvToFilm(it)})
                 }
             }
+        } else {
+            Toast.makeText(this,"No extra", Toast.LENGTH_SHORT).show()
         }
 
         activityDetailFilmBinding.fab.setOnClickListener {
@@ -69,6 +75,13 @@ class DetailFilmActivity : AppCompatActivity() {
             status = !status
             setFavorite(status)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> this.finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setFavorite(favorited: Boolean) {

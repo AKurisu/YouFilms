@@ -13,12 +13,12 @@ class FavoriteActivity : AppCompatActivity() {
         val activityFavoriteBinding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(activityFavoriteBinding.root)
 
-        Log.d("Fav", this.localClassName)
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, "Fav")
         activityFavoriteBinding.viewPager.adapter = sectionPagerAdapter
         activityFavoriteBinding.tabs.setupWithViewPager(activityFavoriteBinding.viewPager)
 
         supportActionBar?.elevation = 0f
+        supportActionBar?.title = "Favorite"
 
     }
 }

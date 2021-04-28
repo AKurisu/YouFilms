@@ -8,13 +8,15 @@ import untad.aldochristopher.youfilms.data.source.remote.response.FilmResponse
 
 object DataDummy {
 
-    fun generateDummyDetailMovie(): MovieEntity = MovieEntity(
-        "A123","Dummy","Lorem Ipsum","1 January 1970","-",1,false
-    )
+    fun generateDummyDetailMovie(movie: MovieEntity, favorite: Boolean): MovieEntity {
+        movie.favorited = favorite
+        return movie
+    }
 
-    fun generateDummyDetailTv(): TvEntity = TvEntity(
-        "A123","Dummy","Lorem Ipsum","1 January 1970","-",1,false
-    )
+    fun generateDummyDetailTv(tv: TvEntity, favorite: Boolean): TvEntity {
+        tv.favorited = favorite
+        return tv
+    }
 
     fun generateDummyMovie(): List<MovieEntity>{
 

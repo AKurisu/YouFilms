@@ -1,6 +1,5 @@
 package untad.aldochristopher.youfilms.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,15 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import untad.aldochristopher.youfilms.R
-import untad.aldochristopher.youfilms.adapter.FilmAdapter
+import untad.aldochristopher.youfilms.adapter.MovieAdapter
+import untad.aldochristopher.youfilms.adapter.TvAdapter
 import untad.aldochristopher.youfilms.data.source.local.entity.FilmEntity
 import untad.aldochristopher.youfilms.data.FilmViewModel
 import untad.aldochristopher.youfilms.data.ToFilmEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.MovieEntity
+import untad.aldochristopher.youfilms.data.source.local.entity.TvEntity
 import untad.aldochristopher.youfilms.data.source.viewmodel.ViewModelFactory
 import untad.aldochristopher.youfilms.databinding.FragmentTvBinding
 import untad.aldochristopher.youfilms.vo.Status
 
-class TvFragment(private val activity: String) : Fragment(), FilmCallback {
+class TvFragment(private val activity: String) : Fragment(), TvCallback {
 
     private lateinit var fragment: FragmentTvBinding
 
@@ -39,7 +41,7 @@ class TvFragment(private val activity: String) : Fragment(), FilmCallback {
 
             val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
-            val adapter = FilmAdapter(this)
+            val adapter = TvAdapter(this)
 
             if (activity == "Main"){
                 getMain(adapter, viewModel)
@@ -66,27 +68,24 @@ class TvFragment(private val activity: String) : Fragment(), FilmCallback {
 //                }
 //            })
 
-//            with(fragment.rvTv) {
-//                layoutManager = LinearLayoutManager(context)
-//                setHasFixedSize(true)
-//                this.adapter = adapter
-//            }
+            with(fragment.rvTv) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                this.adapter = adapter
+            }
         }
     }
 
-    private fun getFavorite(adapter: FilmAdapter, viewModel: FilmViewModel) {
+    private fun getFavorite(adapter: TvAdapter, viewModel: FilmViewModel) {
         viewModel.getFavoriteTv().observe(viewLifecycleOwner, { film ->
             if (film != null) {
                 fragment.progressBar.visibility = View.GONE
-                val movie = ToFilmEntity.takeTv(film)
-                adapter.setFilm(movie, 2)
-                adapter.notifyDataSetChanged()
-                setRv(adapter)
+                adapter.submitList(film)
             }
         })
     }
 
-    private fun getMain(adapter: FilmAdapter, viewModel: FilmViewModel) {
+    private fun getMain(adapter: TvAdapter, viewModel: FilmViewModel) {
         viewModel.getTv().observe(viewLifecycleOwner, { film ->
             if (film != null) {
                 Log.d("Fragment", film.status.name)
@@ -94,10 +93,7 @@ class TvFragment(private val activity: String) : Fragment(), FilmCallback {
                     Status.LOADING -> fragment.progressBar.visibility = View.VISIBLE
                     Status.SUCCESS -> {
                         fragment.progressBar.visibility = View.GONE
-                        val movie = ToFilmEntity.takeTv(film.data)
-                        adapter.setFilm(movie, 2)
-                        adapter.notifyDataSetChanged()
-                        setRv(adapter)
+                        adapter.submitList(film.data)
                     }
                     Status.ERROR -> {
                         fragment.progressBar.visibility = View.GONE
@@ -108,15 +104,15 @@ class TvFragment(private val activity: String) : Fragment(), FilmCallback {
         })
     }
 
-    private fun setRv(adapter: FilmAdapter){
-        with(fragment.rvTv) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            this.adapter = adapter
-        }
-    }
+//    private fun setRv(adapter: TvAdapter){
+//        with(fragment.rvTv) {
+//            layoutManager = LinearLayoutManager(context)
+//            setHasFixedSize(true)
+//            this.adapter = adapter
+//        }
+//    }
 
-    override fun onShareClick(film: FilmEntity) {
+    override fun onShareClick(film: TvEntity){
         if (activity != null) {
             val filmLink = "http:\\\\imdb.com\\" + film.id
 
